@@ -1,0 +1,7 @@
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
+    
+guardar_activos:
+    path: /guardar
+    defaults: {_controller: ActivosBundle:Activos:number}
