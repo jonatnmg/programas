@@ -1,0 +1,13 @@
+tipoasignacion_homepage:
+    path:     /index
+    defaults: { _controller: TipoasignacionBundle:Default:index }
+
+tipo_asignacion_nuevo:
+    path: /principal
+    defaults: { _controller: TipoasignacionBundle:Default:principal }
+
+tipo_asignacion_guardar:
+    path: /guardar
+    defaults: { _controller: TipoasignacionBundle:Default:guardar }
+
+
