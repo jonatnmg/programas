@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * TipoAsignacion
  *
  * @ORM\Table(name="tipo_asignacion")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Web\TipoasignacionBundle\Entity\TipoAsignacionRepository")
  * 
  */
 class TipoAsignacion

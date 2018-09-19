@@ -51,7 +51,7 @@ class DefaultController extends Controller
 
                     if (isset($idNuevo))
                     {                    
-                        $datos[]  = array ("msg" => $duplicado);
+                        $datos[]  = array ("msg" => "Guardado correctamente");
                     }
                     else
                     {
@@ -61,5 +61,36 @@ class DefaultController extends Controller
             } 
           return new Response(json_encode($datos), 200, array('Content-Type'=>'application/json'));              
         }  
+    }
+    public function todotipoasignacionAction(Request $request)
+    {
+        $metodo = $request->getMethod();
+        
+        if ($metodo == 'POST') 
+        {
+            $em = $this->getDoctrine()->getManager();
+            $search_array = json_encode($request->get("search"));
+            $separar = explode('"', $search_array);            
+            $search = $separar[3]; //CONTIENE EL VALOR
+            $start = $request->get('start', 0);
+            $length = $request->get('length', 10);           
+            $todo_tipo_asig = $em->getRepository('TipoasignacionBundle:TipoAsignacion')->FindTodasLosTiposAsignacion($search, $start, $length);
+            
+            if ($todo_tipo_asig)
+            {
+                foreach($todo_tipo_asig as $tipo)
+                {
+                    if ($tipo['estado'] == false ){ $estado = "Inactivo"; }                    
+                    else {                    $estado = "Activo";       }
+
+                    $datos["data"][] = array("nombre" => $tipo['nombre'],"estado" => $estado);
+                }                
+            }
+            else
+            {
+                $datos["data"] = array("data" => $todo_tipo_asig);               
+            }
+            return new Response (json_encode($datos)); 
+        }
     }
 }

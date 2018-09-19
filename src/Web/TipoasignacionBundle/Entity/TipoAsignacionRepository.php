@@ -1,22 +1,21 @@
 <?php
 
-namespace Web\TipoasignacionBundle\Controller;
+namespace Web\TipoasignacionBundle\Entity;
 use Doctrine\ORM\EntityRepository;
 
 class TipoAsignacionRepository extends EntityRepository
 {
-    public function findTodasLasCompras($usuario)
+    public function FindTodasLosTiposAsignacion($search, $start, $length)
     {
         $em = $this->getEntityManager();
-        $consulta = $em->createQuery('SELECT v,o,t'
-                . ' FROM OfertaBundle:Venta v'
-                . ' JOIN v.oferta o'
-                . ' JOIN o.tienda t'
-                . ' WHERE v.usuario = :id'
-                . ' ORDER BY v.fecha DESC');
-        $consulta->setParameter('id', $usuario);
+            $dql = "SELECT t.nombre, t.estado";
+            $dql.= " FROM TipoasignacionBundle:TipoAsignacion t";
+            $dql.= " WHERE t.nombre LIKE '".$search."%' ";
+            $dql.= " ORDER BY t.nombre ASC";
+        $consulta = $em->createQuery($dql);
+        $consulta->setMaxResults($length);
+        $consulta->setFirstResult($start);
         
-        return $consulta->getResult();
+        return $consulta->getArrayResult();
     }
-    
 }
