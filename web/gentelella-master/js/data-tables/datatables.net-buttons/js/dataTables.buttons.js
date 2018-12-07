@@ -1086,7 +1086,7 @@ Buttons.buttonSelector = function ( insts, selector )
  * @static
  */
 Buttons.defaults = {
-	buttons: [ 'copiar', 'excel', 'csv', 'pdf', 'print' ],
+	buttons: [ 'copy', 'excel', 'csv', 'pdf', 'print' ],
 	name: 'main',
 	tabIndex: 0,
 	dom: {

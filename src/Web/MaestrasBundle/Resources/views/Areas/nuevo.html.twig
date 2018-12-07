@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
-{% block title %}Tipo asignacion - Crear{% endblock %}
+{% block title %}Areas - Parametrizar{% endblock %}
 {% block body %}
-     <!-- page content -->
+     <!-- page content  -->
      
         <div class="right_col" role="main" >
-          <div class="" id="conetendor-formulario" style="display: none">
+          <div class="" id="conetendor-formulario" style="display: none"> <!--  -->
             <div class="page-title">
               <div class="title_left">
-                <h3>- Tipo asignación - </h3>
+                <h3>- Areas - </h3>
               </div>
             </div>
             <div class="clearfix"></div>
@@ -32,7 +32,7 @@
 
                     <form class="form-horizontal form-label-left" id="formulario" name="formulario" action="" method="post" data-toggle="validate">
 
-                      <p>Ingrese los datos que solicitan para crear tipo de asignación<input type="hidden" id="idEnviado" value="0" />
+                      <p>Ingrese los datos que solicitan para crear Areas<input type="hidden" id="idEnviado" value="0" />
                       </p>
                       <span class="section">Formulario</span>
 
@@ -40,13 +40,13 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Nombre <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="1" name="nombre"  placeholder="Nombre asignación" required="required" type="text">
+                          <input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="1" name="name"  placeholder="Areas" required="required" type="text">
                         </div>
                       </div>
                        <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">Descripción <span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="descripcion">Descripción <span class="required">*</span>
                         </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12">                          
                           <textarea name="desc" class="form-control col-md-7 col-xs-12" id="desc" required="required"></textarea>
                         </div>
                       </div>
@@ -71,9 +71,9 @@
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-6 col-md-offset-3">
-                            <button id="send" id="send" type="submit" class="btn btn-round btn-success">Enviar</button> 
-                            <button id="cancel" name="cancel" type="reset" class="btn btn-round btn-danger">Cancel</button>
-                            <button id="lista" name="lista" type="button" class="btn btn-round btn-primary">Lista</button>
+                            <button id="send" id="send" type="submit" class="btn btn-success">Enviar</button> 
+                            <button id="cancel" name="cancel" type="reset" class="btn btn-danger">Cancel</button>
+                            <button id="lista" name="lista" type="button" class="btn btn-primary">Lista</button>
                             <input type="hidden" id="iud" value="0" />
                             
                         </div>
@@ -84,7 +84,7 @@
               </div>
             </div>
           </div>
-        {% include '@Tipoasignacion/Default/includes/tabla.html.twig' %}
+       {% include '@Maestras/Areas/includes/tabla.html.twig' %}
         <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="eliminar-tipo-asignacion">
                     <div class="modal-dialog modal-lg">
                       <div class="modal-content">
@@ -99,7 +99,7 @@
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                          <button type="button" class="btn btn-primary" data-dismiss="modal" id="btn-delete" onclick="javascrip:eliminar_data();">Aceptar</button>
+                          <button type="button" class="btn btn-success" data-dismiss="modal" id="btn-delete" onclick="javascrip:eliminar_data();">Aceptar</button>
                           <input type="hidden" id="idEliminar" value="0"/>
                         </div>
 
@@ -128,5 +128,5 @@
 <script src="{{ asset('gentelella-master/js/pdfmake/build/pdfmake.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('gentelella-master/js/pdfmake/build/vfs_fonts.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/funcionesgenerales/funcionesgenerales.js') }}" type="text/javascript"></script>
-<script src="{{ asset('js/tipoasignacion/tipo.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/maestras/areas/areas.js') }}" type="text/javascript"></script>
 {% endblock %}

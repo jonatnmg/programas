@@ -1,16 +1,16 @@
 <?php
 
-namespace Web\TipoasignacionBundle\Entity;
+namespace Web\MaestrasBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * TipoAsignacion
+ * Areas
  *
- * @ORM\Table(name="tipo_asignacion")
- * @ORM\Entity(repositoryClass="Web\TipoasignacionBundle\Entity\TipoAsignacionRepository") 
+ * @ORM\Table(name="areas")
+ * @ORM\Entity(repositoryClass="Web\MaestrasBundle\Entity\AreasRepository")
  */
-class TipoAsignacion
+class Areas
 {
     /**
      * @var integer
@@ -24,14 +24,14 @@ class TipoAsignacion
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=50, nullable=false)
+     * @ORM\Column(name="nombre", type="string", length=100, nullable=false)
      */
     private $nombre;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="descripcion", type="text", length=65535, nullable=false)
+     * @ORM\Column(name="descripcion", type="string", length=100, nullable=true)
      */
     private $descripcion;
 
@@ -41,6 +41,7 @@ class TipoAsignacion
      * @ORM\Column(name="estado", type="boolean", nullable=false)
      */
     private $estado;
+
 
 
     /**
@@ -58,7 +59,7 @@ class TipoAsignacion
      *
      * @param string $nombre
      *
-     * @return TipoAsignacion
+     * @return Areas
      */
     public function setNombre($nombre)
     {
@@ -82,7 +83,7 @@ class TipoAsignacion
      *
      * @param string $descripcion
      *
-     * @return TipoAsignacion
+     * @return Areas
      */
     public function setDescripcion($descripcion)
     {
@@ -106,7 +107,7 @@ class TipoAsignacion
      *
      * @param boolean $estado
      *
-     * @return TipoAsignacion
+     * @return Areas
      */
     public function setEstado($estado)
     {

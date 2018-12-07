@@ -1,16 +1,16 @@
 <?php
 
-namespace Web\TipoasignacionBundle\Entity;
+namespace Web\MaestrasBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * TipoAsignacion
+ * MedioComunicacion
  *
- * @ORM\Table(name="tipo_asignacion")
- * @ORM\Entity(repositoryClass="Web\TipoasignacionBundle\Entity\TipoAsignacionRepository") 
+ * @ORM\Table(name="medio_comunicacion")
+ * @ORM\Entity
  */
-class TipoAsignacion
+class MedioComunicacion
 {
     /**
      * @var integer
@@ -31,7 +31,7 @@ class TipoAsignacion
     /**
      * @var string
      *
-     * @ORM\Column(name="descripcion", type="text", length=65535, nullable=false)
+     * @ORM\Column(name="descripcion", type="string", length=50, nullable=false)
      */
     private $descripcion;
 
@@ -41,6 +41,7 @@ class TipoAsignacion
      * @ORM\Column(name="estado", type="boolean", nullable=false)
      */
     private $estado;
+
 
 
     /**
@@ -58,7 +59,7 @@ class TipoAsignacion
      *
      * @param string $nombre
      *
-     * @return TipoAsignacion
+     * @return MedioComunicacion
      */
     public function setNombre($nombre)
     {
@@ -82,7 +83,7 @@ class TipoAsignacion
      *
      * @param string $descripcion
      *
-     * @return TipoAsignacion
+     * @return MedioComunicacion
      */
     public function setDescripcion($descripcion)
     {
@@ -106,7 +107,7 @@ class TipoAsignacion
      *
      * @param boolean $estado
      *
-     * @return TipoAsignacion
+     * @return MedioComunicacion
      */
     public function setEstado($estado)
     {
@@ -123,10 +124,5 @@ class TipoAsignacion
     public function getEstado()
     {
         return $this->estado;
-    }
-    
-    public function __toString()
-    {
-        return $this->getNombre();
     }
 }

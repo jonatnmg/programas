@@ -1,11 +1,12 @@
 /*
  * SISTEMA DE INFORMACION PARA APOYO DE PROCESOS ADMINISTRATIVOS - SISPROAD
  * VERSION: 1.0
- * FECHA CREACION: 09 SEPTIEMBRE 2018
- * FECHA ULTIMA MODIFICACIÓN: 20 SEPTIEMBRE 2018
+ * FECHA CREACION: 08 OCTUBRE 2018
+ * FECHA ULTIMA MODIFICACIÓN: 08 OCTUBRE 2018
+ * HORA ULTIMA MODIFICACION: 08:15 P.M.
  * CREADO POR: JONATHAN MUÑOZ GONZALEZ
  * EMAIL: DAVIDSANSONII@HOTMAIL.COM - JONATN@JONATHANMUNOZ.COM.CO
- * SINTÉSIS ARCHIVO: JS, ADMINISTRADOR PARA CREACION, MODIFICACION, ELIMINACION Y LISTAD DE TIPOS DE ASIGNACION
+ * SINTÉSIS ARCHIVO: JS, ADMINISTRADOR PARA CREACION, MODIFICACION, ELIMINACION Y LISTADO AREAS
  * TODOS LOS DERECHOS SON RESERVADOS (ALGUNOS SURDOS IGUAL)    
 */
 
@@ -26,35 +27,35 @@ $(document).ready(function()
         listar();
     });    
     
+    //ALGUNAS FUNCIONES MAS PARA EL BOTON CANCELAR
     cancel();
     
-    //FORMULARIO Y VALIDADOR
+    //VALIDAR FORMULARIO
     $("#formulario").validate({	
         submitHandler: function(forma) 
         {
             var datos = $("#formulario").serialize();
             var idEnviado = $("#idEnviado").val();
             var iud = $("#iud").val();
-                $.ajax
-                ({  
-                    url:        'guardar',  //@routing => Web\TipodeasignacionBundle\Resources\config\routing.yml  - tipo_asignacion_guardar:
-                    type:       'POST',   
-                    data:       datos+'&iud='+iud+"&idEnviado="+idEnviado,  //i = inset, u = update, d = delete ; 1 -> Nuevo, 2 -> Modificar, 3 -> Eliminar
-                    async:      true, 
-                    success: function(info) 
-                    {               
-                        alert(info[0].msg);
-                        mostrar_table();
-                    },  
-                    error : function(xhr, textStatus, errorThrown) {  
-                        alert('Error Ajax!');
-                        mostrar_table();
-                    }  
-                }); 
-             return false;
+            
+            $.ajax
+            ({  
+                url:        'guardar',  //@routing => Web\MaestrasBundle\Resources\config\routing.yml  - areas_guardar:
+                type:       'POST',   
+                data:       datos+'&iud='+iud+"&idEnviado="+idEnviado,  //i = inset, u = update, d = delete ; 1 -> Nuevo, 2 -> Modificar, 3 -> Eliminar
+                async:      true, 
+                success: function(info) 
+                {               
+                    alert(info[0].msg);
+                },  
+                error : function(xhr, textStatus, errorThrown) {  
+                    alert('Error Ajax!');
+                    mostrar_table();
+                }  
+            }); 
+         return false;
         }	
-    });  
-    
+    });     
 });
 
 //FUNCIONES
@@ -69,7 +70,7 @@ var obtener_data_editar = function(tbody, table)
         
         if ( data.estado == "Activo" )
         {
-            $("#estado").val(1);
+          $("#estado").val(1);
         }
         else
         {
@@ -77,7 +78,6 @@ var obtener_data_editar = function(tbody, table)
         }
         
         $("#idEnviado").val(data.id);
-        //console.log(data);
         editar();        
     });
 }
@@ -100,7 +100,7 @@ function eliminar_data()
 
     $.ajax
         ({  
-            url:        'eliminar',  //@routing => Web\TipodeasignacionBundle\Resources\config\routing.yml  - tipo_asignacion_guardar:
+            url:        'eliminar',  //@routing => Web\TipodeasignacionBundle\Resources\config\routing.yml  - areas_eliminar:
             type:       'POST',   
             data:       "idEnviado="+idEliminar+'&iud='+2,  //i = inset, u = update, d = delete ; 0 -> Nuevo, 1 -> Modificar, 2 -> Eliminar
             async:      true, 
@@ -147,7 +147,6 @@ var listar = function ()
     limpiar_datos();
     $("#contenedor-tabla").slideDown("slow");
     $("#conetendor-formulario").slideUp("slow");
-    //mostrar_table();
 }
 
 var cancel = function ()
@@ -165,20 +164,21 @@ var mostrar_table = function ()
          
          "ajax": {
             "method": "POST",
-            "url": "todotipoasignacion",           
+            "url": "lista",           
         },
          "columns": [
              { "data": "nombre" },
+             { "data": "descripcion"},
              { "data": "estado"},
              
-             { "defaultContent" : "<button id='editar' id='editar' type='button' class='editar btn btn-round btn-default fa fa-edit'></button> \n\
-                                   <button id='eliminar' id='eliminar' type='button' class='eliminar btn btn-round btn-default fa fa-archive' data-toggle='modal' data-target='.bs-example-modal-lg'></button> "},
+             { "defaultContent" : "<button id='editar' id='editar' type='button' class='editar btn btn-primary btn-xs'><i class='fa fa-pencil'></i> Editar </button> \n\
+                                   <button id='eliminar' id='eliminar' type='button' class='eliminar btn btn-danger btn-xs' data-toggle='modal' data-target='.bs-example-modal-lg'><i class='fa fa-trash-o'></i> Eliminar </button> "},
          ],
         "language": idioma_espanol, 
          "dom": '<"top"lBf> rt <"bottom"p> ',
          "buttons": [
              {
-                 "text": "<i class='fa fa-file'></i>",
+                 "text": "<i class='fa fa-file'> Nuevo </i>",
                  "titleAttr": "Nuevo",
                  "className": "btn btn-default",
                  "action": function ()
@@ -188,13 +188,14 @@ var mostrar_table = function ()
              },
              {
                  extend: "excelHtml5",
-                 text: "<i class='fa fa-file-excel-o'></i>",
+                 text: "<i class='fa fa-file-excel-o'>  </i>",
                  titleAttr: "Excel"
              },
              {
                  extend: "csvHtml5",
-                 text: "<i class='fa fa-file-text-o'></i>",
-                 titleAttr: "CSV"
+                 text: "<i class='fa fa-file-text-o'> CSV </i>",
+                 titleAttr: "CSV",
+                 "className": "btn btn-default",
              },
              {
                  extend: "pdfHtml5",
@@ -207,5 +208,5 @@ var mostrar_table = function ()
      //ASIGNAR FUNCIONES
  obtener_data_editar("#datatable1 tbody", table);
  obtener_data_elminar("#datatable1 tbody", table);
+ }
 
-}

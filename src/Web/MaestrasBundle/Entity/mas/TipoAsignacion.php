@@ -1,6 +1,6 @@
 <?php
 
-namespace Web\TipoasignacionBundle\Entity;
+namespace Web\MaestrasBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * TipoAsignacion
  *
  * @ORM\Table(name="tipo_asignacion")
- * @ORM\Entity(repositoryClass="Web\TipoasignacionBundle\Entity\TipoAsignacionRepository") 
+ * @ORM\Entity
  */
 class TipoAsignacion
 {
@@ -41,6 +41,7 @@ class TipoAsignacion
      * @ORM\Column(name="estado", type="boolean", nullable=false)
      */
     private $estado;
+
 
 
     /**
@@ -123,10 +124,5 @@ class TipoAsignacion
     public function getEstado()
     {
         return $this->estado;
-    }
-    
-    public function __toString()
-    {
-        return $this->getNombre();
     }
 }

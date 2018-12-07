@@ -1,10 +1,10 @@
 <?php
 
-namespace Web\TipoasignacionBundle\Controller;
+namespace Web\PqrsBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use Web\TipoasignacionBundle\Entity\TipoAsignacion;
+use Web\PqrsBundle\Entity\Pqrs;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -12,11 +12,11 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('@Tipoasignacion/Default/index.html.twig');
-    }    
+        return $this->render('@Pqrs/Default/index.html.twig');
+    }
     public function principalAction()
     {
-        return $this->render('@Tipoasignacion/Default/nuevo.html.twig');
+        return $this->render('@Pqrs/Default/nuevo.html.twig');
     }
     public function procesarAction(Request $request)
     {        
@@ -24,8 +24,8 @@ class DefaultController extends Controller
         
         if ($metodo == 'POST') 
         {
-            $nm = ($request->get('nombre'));
-            $desc = ($request->get('desc'));
+            $nm = ($request->get('name'));
+            $orden = ($request->get('orden'));
             $est = $request->get('estado');
             $id = $request->get('idEnviado',0); //id = 0 => insert nuevo
             $iud = $request->get('iud',0); //iud = 0 => Nuevo, 1 => Modificar, iud = 2 => Eliminar 
@@ -33,21 +33,21 @@ class DefaultController extends Controller
             if ($id == 0 && $iud == 0) //NUEVO
             {
                 $em = $this->getDoctrine()->getManager();
-                $duplicado = $em->getRepository('TipoasignacionBundle:TipoAsignacion')->findOneByNombre("$nm");
+                $duplicado = $em->getRepository('PqrsBundle:Pqrs')->findOneByNombre("$nm");
 
                 if ($duplicado != null)
                    $datos[]  = array ("msg" => utf8_encode("Registro duplicado"));
                 
                 if ($duplicado == null) //Devuelve null si no encuentrada nada en la consulta
                 {
-                    $tipo = new TipoAsignacion();
-                    $tipo->setDescripcion($desc);
-                    $tipo->setEstado($est);
-                    $tipo->setNombre($nm);
-                    $em->persist($tipo);
+                    $pqrs = new Pqrs();
+                    $pqrs->setOrden($orden);
+                    $pqrs->setEstado($est);
+                    $pqrs->setNombre($nm);
+                    $em->persist($pqrs);
                     $em->flush();              
 
-                    $idNuevo = $tipo->getId();
+                    $idNuevo = $pqrs->getId();
 
                     if (isset($idNuevo))
                     {                    
@@ -61,13 +61,13 @@ class DefaultController extends Controller
             }            
             else if ($id > 0 && $iud == 1) //MODIFICAR
             {
-                $datos[]  = array ("msg" => $this->modificar($id,$nm,$desc,$est));
+                $datos[]  = array ("msg" => $this->modificar($id,$nm,$orden,$est));
                              
             }
             else if ($id > 0 && $iud == 2) //ELIMINAR
             {
-                $em = $this->getDoctrine()->getManager();
-                $eliminar = $em->getRepository('TipoasignacionBundle:TipoAsignacion')->DeleteTiposAsignacion($id); 
+               $em = $this->getDoctrine()->getManager();
+                $eliminar = $em->getRepository('PqrsBundle:Pqrs')->DeletePQRS($id); 
                                
                 if ($eliminar > 0)
                 {
@@ -82,7 +82,7 @@ class DefaultController extends Controller
         }  
     }
     
-    public function todotipoasignacionAction(Request $request)
+    public function todopqrsAction(Request $request)
     {
         $metodo = $request->getMethod();
         
@@ -94,21 +94,21 @@ class DefaultController extends Controller
             $search = $separar[3]; //CONTIENE EL VALOR
             $start = $request->get('start', 0);
             $length = $request->get('length', 10);           
-            $todo_tipo_asig = $em->getRepository('TipoasignacionBundle:TipoAsignacion')->FindTodasLosTiposAsignacion($search, $start, $length);
+            $todo_PQRS = $em->getRepository('PqrsBundle:Pqrs')->FindTodasLosPQRS($search, $start, $length);
             $recordsFiltered = 1;
             
-            if ($todo_tipo_asig)
+            if ($todo_PQRS)
             {
-                foreach($todo_tipo_asig as $tipo)
+                foreach($todo_PQRS as $dato)
                 {
-                    if ($tipo['estado'] == false ){ $estado = "Inactivo"; }                    
+                    if ($dato['estado'] == false ){ $estado = "Inactivo"; }                    
                     else {                    $estado = "Activo";       }
 
-$datos["data"][] = array("id" => $tipo['id'],"nombre" => $tipo['nombre'],"estado" => $estado,"descripcion" => $tipo['descripcion'],"max"=>$start);
+                    $datos["data"][] = array("id" => $dato['id'],"nombre" => $dato['nombre'],"estado" => $estado,"orden" => $dato['orden']);
                     $recordsFiltered++;
                 }
                 
-                $recordsTotal = $em->getRepository('TipoasignacionBundle:TipoAsignacion')->CountTodosLosTiposAsignacion();
+                $recordsTotal = $em->getRepository('PqrsBundle:Pqrs')->CountTodosLosPQRS();
                 
                 $datos["recordsFiltered"] = $recordsFiltered;
                 $datos["recordsTotal"] = $recordsTotal[0]["total"];                
@@ -116,20 +116,20 @@ $datos["data"][] = array("id" => $tipo['id'],"nombre" => $tipo['nombre'],"estado
             else
             {
                 $recordsFiltered = 0 ;
-                $recordsTotal = $em->getRepository('TipoasignacionBundle:TipoAsignacion')->CountTodosLosTiposAsignacion();
+                $recordsTotal = $em->getRepository('PqrsBundle:Pqrs')->CountTodosLosPQRS();
                 
                 $datos["recordsFiltered"] = $recordsFiltered;
                 $datos["recordsTotal"] = $recordsTotal[0]["total"];   
-                $datos["data"] = array("data" => $todo_tipo_asig);
+                $datos["data"] = array("data" => $todo_PQRS);
             }
             
             return new Response (json_encode($datos)); 
         }
     }
-    public function modificar($id,$nombre,$descripcion,$estado)
+    public function modificar($id,$nombre,$orden,$estado)
     {
         $em = $this->getDoctrine()->getManager();
-        $modificar = $em->getRepository('TipoasignacionBundle:TipoAsignacion')->UpdateTiposAsignacion($id,$nombre,$descripcion,$estado); 
+        $modificar = $em->getRepository('PqrsBundle:Pqrs')->UpdatePQRS($id,$nombre,$orden,$estado); 
         
         if ($modificar > 0)
         {
@@ -140,4 +140,5 @@ $datos["data"][] = array("id" => $tipo['id'],"nombre" => $tipo['nombre'],"estado
             return "Sin modificar"; 
         }
     }
+    
 }

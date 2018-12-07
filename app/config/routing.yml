@@ -1,6 +1,14 @@
+pqrs:
+    resource: "@PqrsBundle/Resources/config/routing.yml"
+    prefix:   /pqrs
+
 tipoasignacion:
     resource: "@TipoasignacionBundle/Resources/config/routing.yml"
     prefix:   /asig
+    
+maestras:
+    resource: "@MaestrasBundle/Resources/config/routing.yml"
+    prefix:   /master
 
 app:
     resource: '@AppBundle/Controller/'

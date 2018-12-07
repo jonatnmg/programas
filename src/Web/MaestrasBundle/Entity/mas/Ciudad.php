@@ -1,16 +1,16 @@
 <?php
 
-namespace Web\TipoasignacionBundle\Entity;
+namespace Web\MaestrasBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * TipoAsignacion
+ * Ciudad
  *
- * @ORM\Table(name="tipo_asignacion")
- * @ORM\Entity(repositoryClass="Web\TipoasignacionBundle\Entity\TipoAsignacionRepository") 
+ * @ORM\Table(name="ciudad")
+ * @ORM\Entity
  */
-class TipoAsignacion
+class Ciudad
 {
     /**
      * @var integer
@@ -24,16 +24,16 @@ class TipoAsignacion
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=50, nullable=false)
+     * @ORM\Column(name="nombre", type="string", length=255, nullable=false)
      */
     private $nombre;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="descripcion", type="text", length=65535, nullable=false)
+     * @ORM\Column(name="slug", type="string", length=255, nullable=true)
      */
-    private $descripcion;
+    private $slug;
 
     /**
      * @var boolean
@@ -41,6 +41,7 @@ class TipoAsignacion
      * @ORM\Column(name="estado", type="boolean", nullable=false)
      */
     private $estado;
+
 
 
     /**
@@ -58,7 +59,7 @@ class TipoAsignacion
      *
      * @param string $nombre
      *
-     * @return TipoAsignacion
+     * @return Ciudad
      */
     public function setNombre($nombre)
     {
@@ -78,27 +79,27 @@ class TipoAsignacion
     }
 
     /**
-     * Set descripcion
+     * Set slug
      *
-     * @param string $descripcion
+     * @param string $slug
      *
-     * @return TipoAsignacion
+     * @return Ciudad
      */
-    public function setDescripcion($descripcion)
+    public function setSlug($slug)
     {
-        $this->descripcion = $descripcion;
+        $this->slug = $slug;
 
         return $this;
     }
 
     /**
-     * Get descripcion
+     * Get slug
      *
      * @return string
      */
-    public function getDescripcion()
+    public function getSlug()
     {
-        return $this->descripcion;
+        return $this->slug;
     }
 
     /**
@@ -106,7 +107,7 @@ class TipoAsignacion
      *
      * @param boolean $estado
      *
-     * @return TipoAsignacion
+     * @return Ciudad
      */
     public function setEstado($estado)
     {
@@ -123,10 +124,5 @@ class TipoAsignacion
     public function getEstado()
     {
         return $this->estado;
-    }
-    
-    public function __toString()
-    {
-        return $this->getNombre();
     }
 }

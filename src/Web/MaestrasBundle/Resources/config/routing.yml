@@ -1,0 +1,21 @@
+# prefix:   /master
+
+areas_homepage:
+    path:     /
+    defaults: { _controller: MaestrasBundle:Areas:index } 
+
+areas_nuevo:
+   path: /principal
+   defaults: { _controller: MaestrasBundle:Areas:principal }
+    
+areas_guardar:
+   path: /guardar
+   defaults: { _controller: MaestrasBundle:Areas:procesar }
+
+areas_eliminar:
+   path: /eliminar
+   defaults: { _controller: MaestrasBundle:Areas:procesar }
+
+areas_todos:
+   path: /lista
+   defaults: { _controller: MaestrasBundle:Areas:lista }

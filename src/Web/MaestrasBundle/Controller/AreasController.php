@@ -1,22 +1,22 @@
 <?php
 
-namespace Web\TipoasignacionBundle\Controller;
+namespace Web\MaestrasBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use Web\TipoasignacionBundle\Entity\TipoAsignacion;
+use Web\MaestrasBundle\Entity\Areas;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class DefaultController extends Controller
+class AreasController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('@Tipoasignacion/Default/index.html.twig');
-    }    
+        return $this->render('@Maestras/Areas/index.html.twig');
+    }
     public function principalAction()
     {
-        return $this->render('@Tipoasignacion/Default/nuevo.html.twig');
+        return $this->render('@Maestras/Areas/nuevo.html.twig');
     }
     public function procesarAction(Request $request)
     {        
@@ -24,7 +24,7 @@ class DefaultController extends Controller
         
         if ($metodo == 'POST') 
         {
-            $nm = ($request->get('nombre'));
+            $nm = ($request->get('name'));
             $desc = ($request->get('desc'));
             $est = $request->get('estado');
             $id = $request->get('idEnviado',0); //id = 0 => insert nuevo
@@ -33,21 +33,21 @@ class DefaultController extends Controller
             if ($id == 0 && $iud == 0) //NUEVO
             {
                 $em = $this->getDoctrine()->getManager();
-                $duplicado = $em->getRepository('TipoasignacionBundle:TipoAsignacion')->findOneByNombre("$nm");
+                $duplicado = $em->getRepository('MaestrasBundle:Areas')->findOneByNombre($nm);
 
                 if ($duplicado != null)
                    $datos[]  = array ("msg" => utf8_encode("Registro duplicado"));
                 
                 if ($duplicado == null) //Devuelve null si no encuentrada nada en la consulta
                 {
-                    $tipo = new TipoAsignacion();
-                    $tipo->setDescripcion($desc);
-                    $tipo->setEstado($est);
-                    $tipo->setNombre($nm);
-                    $em->persist($tipo);
+                    $insertar = new Areas();
+                    $insertar->setDescripcion($desc);
+                    $insertar->setEstado($est);
+                    $insertar->setNombre($nm);
+                    $em->persist($insertar);
                     $em->flush();              
 
-                    $idNuevo = $tipo->getId();
+                    $idNuevo = $insertar->getId();
 
                     if (isset($idNuevo))
                     {                    
@@ -61,13 +61,12 @@ class DefaultController extends Controller
             }            
             else if ($id > 0 && $iud == 1) //MODIFICAR
             {
-                $datos[]  = array ("msg" => $this->modificar($id,$nm,$desc,$est));
-                             
+               $datos[]  = array ("msg" => $this->modificar($id,$nm,$desc,$est));                             
             }
             else if ($id > 0 && $iud == 2) //ELIMINAR
             {
                 $em = $this->getDoctrine()->getManager();
-                $eliminar = $em->getRepository('TipoasignacionBundle:TipoAsignacion')->DeleteTiposAsignacion($id); 
+                $eliminar = $em->getRepository('MaestrasBundle:Areas')->Delete($id); 
                                
                 if ($eliminar > 0)
                 {
@@ -80,9 +79,8 @@ class DefaultController extends Controller
             }            
           return new Response(json_encode($datos), 200, array('Content-Type'=>'application/json'));              
         }  
-    }
-    
-    public function todotipoasignacionAction(Request $request)
+    }    
+    public function listaAction(Request $request)
     {
         $metodo = $request->getMethod();
         
@@ -94,42 +92,39 @@ class DefaultController extends Controller
             $search = $separar[3]; //CONTIENE EL VALOR
             $start = $request->get('start', 0);
             $length = $request->get('length', 10);           
-            $todo_tipo_asig = $em->getRepository('TipoasignacionBundle:TipoAsignacion')->FindTodasLosTiposAsignacion($search, $start, $length);
+            $todo = $em->getRepository('MaestrasBundle:Areas')->FindTodas($search, $start, $length);
             $recordsFiltered = 1;
             
-            if ($todo_tipo_asig)
+            if ($todo)
             {
-                foreach($todo_tipo_asig as $tipo)
+                foreach($todo as $dato)
                 {
-                    if ($tipo['estado'] == false ){ $estado = "Inactivo"; }                    
+                    if ($dato['estado'] == false ){ $estado = "Inactivo"; }                    
                     else {                    $estado = "Activo";       }
 
-$datos["data"][] = array("id" => $tipo['id'],"nombre" => $tipo['nombre'],"estado" => $estado,"descripcion" => $tipo['descripcion'],"max"=>$start);
+                    $datos["data"][] = array("id" => $dato['id'],"nombre" => $dato['nombre'],"estado" => $estado,"descripcion" => $dato['descripcion']);
                     $recordsFiltered++;
                 }
                 
-                $recordsTotal = $em->getRepository('TipoasignacionBundle:TipoAsignacion')->CountTodosLosTiposAsignacion();
-                
+                $recordsTotal = $em->getRepository('MaestrasBundle:Areas')->CountTodos();                
                 $datos["recordsFiltered"] = $recordsFiltered;
                 $datos["recordsTotal"] = $recordsTotal[0]["total"];                
             }
             else
             {
                 $recordsFiltered = 0 ;
-                $recordsTotal = $em->getRepository('TipoasignacionBundle:TipoAsignacion')->CountTodosLosTiposAsignacion();
-                
+                $recordsTotal = $em->getRepository('MaestrasBundle:Areas')->CountTodos();                
                 $datos["recordsFiltered"] = $recordsFiltered;
                 $datos["recordsTotal"] = $recordsTotal[0]["total"];   
-                $datos["data"] = array("data" => $todo_tipo_asig);
-            }
-            
+                $datos["data"] = array("data" => $todo);
+            }            
             return new Response (json_encode($datos)); 
         }
     }
     public function modificar($id,$nombre,$descripcion,$estado)
     {
         $em = $this->getDoctrine()->getManager();
-        $modificar = $em->getRepository('TipoasignacionBundle:TipoAsignacion')->UpdateTiposAsignacion($id,$nombre,$descripcion,$estado); 
+        $modificar = $em->getRepository('MaestrasBundle:Areas')->Update($id,$nombre,$descripcion,$estado); 
         
         if ($modificar > 0)
         {
@@ -139,5 +134,5 @@ $datos["data"][] = array("id" => $tipo['id'],"nombre" => $tipo['nombre'],"estado
         {
             return "Sin modificar"; 
         }
-    }
+    }    
 }

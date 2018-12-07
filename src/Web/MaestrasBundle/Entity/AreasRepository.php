@@ -1,17 +1,18 @@
 <?php
 
-namespace Web\TipoasignacionBundle\Entity;
+namespace Web\MaestrasBundle\Entity;
+
 use Doctrine\ORM\EntityRepository;
 
-class TipoAsignacionRepository extends EntityRepository
+class AreasRepository extends EntityRepository
 {
-    public function FindTodasLosTiposAsignacion($search, $start, $length)
+    public function FindTodas($search, $start, $length)
     {
         $em = $this->getEntityManager();
-            $dql = "SELECT t.nombre, t.estado,t.descripcion, t.id";
-            $dql.= " FROM TipoasignacionBundle:TipoAsignacion t";
-            $dql.= " WHERE t.nombre LIKE '".$search."%' ";
-            $dql.= " ORDER BY t.nombre ASC";
+            $dql = "SELECT p.nombre, p.estado,p.descripcion, p.id";
+            $dql.= " FROM MaestrasBundle:Areas p";
+            $dql.= " WHERE p.nombre LIKE '".$search."%' ";
+            $dql.= " ORDER BY p.nombre ASC";
         $consulta = $em->createQuery($dql);
         $consulta->setMaxResults($length);
         $consulta->setFirstResult($start);
@@ -19,21 +20,21 @@ class TipoAsignacionRepository extends EntityRepository
         return $consulta->getArrayResult();
     }
     
-    public function CountTodosLosTiposAsignacion()
+    public function CountTodos()
     {
         $em = $this->getEntityManager();
-            $dql = "SELECT COUNT(t.id) as total ";
-            $dql.= " FROM TipoasignacionBundle:TipoAsignacion t";           
+            $dql = "SELECT COUNT(p.id) as total ";
+            $dql.= " FROM MaestrasBundle:Areas p";           
         $consulta = $em->createQuery($dql);
         $consulta->setMaxResults(1);
         return $consulta->getArrayResult();
     }
     
-    public function DeleteTiposAsignacion($id)
+    public function Delete($id)
     {
         $em = $this->getEntityManager();
-            $dql = " DELETE TipoasignacionBundle:TipoAsignacion t ";           
-            $dql.= " WHERE t.id = :id ";
+            $dql = " DELETE MaestrasBundle:Areas p ";           
+            $dql.= " WHERE p.id = :id ";
         $consulta = $em->createQuery($dql);
         $consulta->setParameter('id',$id);
         $consulta->setMaxResults(1);
@@ -41,12 +42,12 @@ class TipoAsignacionRepository extends EntityRepository
         return $consulta->getArrayResult();
     }
     
-    public function UpdateTiposAsignacion($id,$nombre,$descripcion,$estado)
+    public function Update($id,$nombre,$descripcion,$estado)
     {
         $em = $this->getEntityManager();
-            $dql = " UPDATE TipoasignacionBundle:TipoAsignacion t ";
-            $dql.= " SET t.nombre = :nombre, t.estado = :estado, t.descripcion = :descripcion";
-            $dql.= " WHERE t.id = :id ";
+            $dql = " UPDATE MaestrasBundle:Areas p ";
+            $dql.= " SET p.nombre = :nombre, p.estado = :estado, p.descripcion = :descripcion";
+            $dql.= " WHERE p.id = :id ";
         $consulta = $em->createQuery($dql);
         $consulta->setParameter('id',$id);
         $consulta->setParameter('nombre',$nombre);

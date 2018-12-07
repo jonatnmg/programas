@@ -1,0 +1,19 @@
+pqrs_homepage:
+    path:     /
+    defaults: { _controller: PqrsBundle:Default:index }
+
+pqrs_nuevo:
+    path: /principal
+    defaults: { _controller: PqrsBundle:Default:principal }
+    
+pqrs_guardar:
+    path: /guardar
+    defaults: { _controller: PqrsBundle:Default:procesar }
+
+pqrs_todos:
+    path: /todopqrs
+    defaults: { _controller: PqrsBundle:Default:todopqrs }
+
+pqrs_eliminar:
+    path: /eliminar
+    defaults: { _controller: PqrsBundle:Default:procesar }
