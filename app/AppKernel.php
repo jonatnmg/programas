@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new Web\TipoasignacionBundle\TipoasignacionBundle(),
             new Web\PqrsBundle\PqrsBundle(),
             new Web\MaestrasBundle\MaestrasBundle(),
+            new Web\UsuarioBundle\UsuarioBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

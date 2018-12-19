@@ -1,0 +1,89 @@
+{% extends 'login_capa.html.twig' %}
+{% block title %}Iniciar sesion{% endblock %}
+{% block body %}
+
+<div>
+  <a class="hiddenanchor" id="signup"></a>
+  <a class="hiddenanchor" id="signin"></a>
+
+  <div class="login_wrapper">
+    <div class="animate form login_form">
+      <section class="login_content">
+        <form action="{{ path('usuario_login_check') }}" method="post">
+          <h1>Inicio sesión</h1>
+          <div>
+            <input type="text" id="username" name="_username" class="form-control" placeholder="NombreUsuario" required="" value="{{ last_username }}" />
+          </div>
+          <div>
+            <input type="password" id="password" name="_password" class="form-control" placeholder="Contraseña" required="" />
+          </div>
+          <div>
+            <input type="submit" class="btn btn-default submit" name="login" value="Acceder" />
+            <a class="reset_pass" href="#">Olvidó su contraseña?</a>
+          </div>
+          {% if error %}
+            <div clas=""> {{ error.message }}    </div>
+          {% endif %}
+          <div class="clearfix"></div>
+
+          <div class="separator">
+            <p class="change_link">Nuevo en el sitio?
+              <a href="#signup" class="to_register"> Crear cuenta </a>
+            </p>
+           
+            <div class="separator">
+                <input type="checkbox" id="remember_me" name="_remember_me" checked />
+                <label for="remember_me">No cerrar sesión</label>   
+            </div>
+            <div class="clearfix"></div>
+            <br />
+
+            <div>
+              <h1><i class="fa fa-paw"></i> </h1>
+              <p> Desarollado por Jonathan Muñoz Gonzalez ©2018</p>
+              <p> Gentelella Alela! is a Bootstrap 3 template ©2016</p>
+            </div>
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <div id="register" class="animate form registration_form">
+      <section class="login_content">
+        <form>
+          <h1>Crear cuenta</h1>
+          <div>
+            <input type="text" class="form-control" placeholder="Username" required="" />
+          </div>
+          <div>
+            <input type="email" class="form-control" placeholder="Email" required="" />
+          </div>
+          <div>
+            <input type="password" class="form-control" placeholder="Password" required="" />
+          </div>
+          <div>
+            <a class="btn btn-default submit" href="index.html">Enviar</a>
+          </div>
+
+          <div class="clearfix"></div>
+
+          <div class="separator">
+            <p class="change_link">
+              <a href="#signin" class="to_register"> Volver </a>
+            </p>
+
+            <div class="clearfix"></div>
+            <br />
+
+            <div>
+              <h1><i class="fa fa-paw"></i> </h1>
+              <p> Desarollado por Jonathan Muñoz Gonzalez ©2018</p>
+              <p> Gentelella Alela! is a Bootstrap 3 template ©2016</p>
+            </div>
+          </div>
+        </form>
+      </section>
+    </div>
+  </div>
+</div>
+  {% endblock %} 

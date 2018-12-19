@@ -19,3 +19,19 @@ areas_eliminar:
 areas_todos:
    path: /lista
    defaults: { _controller: MaestrasBundle:Areas:lista }
+
+cargos_nuevo:
+   path: /cp
+   defaults: { _controller: MaestrasBundle:Cargos:principal }
+
+cargos_guardar:
+   path: /guardar_cargo
+   defaults: { _controller: MaestrasBundle:Cargos:procesar }
+
+cargos_eliminar:
+   path: /eliminar_cargo
+   defaults: { _controller: MaestrasBundle:Cargos:procesar }
+
+cargos_todos:
+   path: /lista_cargo
+   defaults: { _controller: MaestrasBundle:Cargos:lista }

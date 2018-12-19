@@ -1,24 +1,23 @@
-# To get started with security, check out the documentation:
-# https://symfony.com/doc/current/security.html
+# app/config/security.yml
 security:
-
-    # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
-    providers:
-        in_memory:
-            memory: ~
-
+    
     firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
+        frontend:
+            pattern:    ^/*
+            anonymous:  ~
+            form_login:
+                login_path: usuario_login
+                check_path: usuario_login_check
 
-        main:
-            anonymous: ~
-            # activate different ways to authenticate
-
-            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            #http_basic: ~
-
-            # https://symfony.com/doc/current/security/form_login_setup.html
-            #form_login: ~
+    access_control:
+        #- { path: ^/usuario/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        #- { path: ^/usuario/registro, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        #- { path: ^/usuario/*, roles: ROLE_USUARIO }
+        #cdcd.. dcd..- { path: ^/master/*, roles: ROLE_USUARIO }
+    
+    providers:
+        usuarios:
+            entity: { class: Web\UsuarioBundle\Entity\Usuario, property: email }
+            
+    encoders:
+        Web\UsuarioBundle\Entity\Usuario: { algorithm: sha512, iterations: 10 }

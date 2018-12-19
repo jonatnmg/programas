@@ -1,7 +1,8 @@
 <?php
 
-namespace Web\MaestrasBundle\Entity;
+namespace Web\UsuarioBundle\Entity;
 
+use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="usuario")
  * @ORM\Entity
  */
-class Usuario
+class Usuario implements UserInterface
 {
     /**
      * @var integer
@@ -24,9 +25,9 @@ class Usuario
     /**
      * @var string
      *
-     * @ORM\Column(name="usu", type="string", length=100, nullable=false)
+     * @ORM\Column(name="nombre", type="string", length=100, nullable=false)
      */
-    private $usu;
+    private $nombre;
 
     /**
      * @var string
@@ -125,27 +126,27 @@ class Usuario
     }
 
     /**
-     * Set usu
+     * Set nombre
      *
      * @param string $usu
      *
      * @return Usuario
      */
-    public function setUsu($usu)
+    public function setNombre($nombre)
     {
-        $this->usu = $usu;
+        $this->nombre = $nombre;
 
         return $this;
     }
 
     /**
-     * Get usu
+     * Get nombre
      *
      * @return string
      */
-    public function getUsu()
+    public function getNombre()
     {
-        return $this->usu;
+        return $this->nombre;
     }
 
     /**
@@ -434,5 +435,24 @@ class Usuario
     public function getEstado()
     {
         return $this->estado;
+    }
+    
+    public function __toString()
+    {
+        return $this->getNombre();
+    }
+    
+    function eraseCredentials()
+    {
+        
+    }
+    
+    function getRoles()
+    {
+        return array('ROLE_USUARIO');
+    }
+    
+    function getUsername() {
+        return $this->getEmail();
     }
 }

@@ -45,8 +45,9 @@ $(document).ready(function()
                     async:      true, 
                     success: function(info) 
                     {               
-                        listar();                        
                         alert(info[0].msg);
+                        listar();
+                        mostrar_table();
                     },  
                     error : function(xhr, textStatus, errorThrown) {  
                         alert('Error Ajax!');
@@ -111,8 +112,8 @@ function eliminar_data()
                 mostrar_table();
             },  
             error : function(xhr, textStatus, errorThrown) {  
-                  alert('Error Ajax!'); 
-                  mostrar_table();
+                alert('Error Ajax!'); 
+                mostrar_table();
             }  
         }); 
   return false;

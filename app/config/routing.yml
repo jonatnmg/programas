@@ -10,6 +10,10 @@ maestras:
     resource: "@MaestrasBundle/Resources/config/routing.yml"
     prefix:   /master
 
+usuarios:
+    resource: "@UsuarioBundle/Resources/config/routing.yml"
+    prefix:   /usuario
+    
 app:
     resource: '@AppBundle/Controller/'
     type: annotation

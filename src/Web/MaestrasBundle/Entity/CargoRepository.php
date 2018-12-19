@@ -4,13 +4,13 @@ namespace Web\MaestrasBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
-class AreasRepository extends EntityRepository
+class CargoRepository extends EntityRepository
 {
     public function FindTodas($search, $start, $length)
     {
         $em = $this->getEntityManager();
             $dql = "SELECT p.nombre, p.estado,p.descripcion, p.id";
-            $dql.= " FROM MaestrasBundle:Areas p";
+            $dql.= " FROM MaestrasBundle:Cargo p";
             $dql.= " WHERE p.nombre LIKE '".$search."%' ";
             $dql.= " ORDER BY p.nombre ASC";
         $consulta = $em->createQuery($dql);
@@ -24,7 +24,7 @@ class AreasRepository extends EntityRepository
     {
         $em = $this->getEntityManager();
             $dql = "SELECT COUNT(p.id) as total ";
-            $dql.= " FROM MaestrasBundle:Areas p";           
+            $dql.= " FROM MaestrasBundle:Cargo p";           
         $consulta = $em->createQuery($dql);
         $consulta->setMaxResults(1);
         return $consulta->getArrayResult();
@@ -33,7 +33,7 @@ class AreasRepository extends EntityRepository
     public function Delete($id)
     {
         $em = $this->getEntityManager();
-            $dql = " DELETE MaestrasBundle:Areas p ";           
+            $dql = " DELETE MaestrasBundle:Cargo p ";           
             $dql.= " WHERE p.id = :id ";
         $consulta = $em->createQuery($dql);
         $consulta->setParameter('id',$id);
@@ -45,7 +45,7 @@ class AreasRepository extends EntityRepository
     public function Update($id,$nombre,$descripcion,$estado)
     {
         $em = $this->getEntityManager();
-            $dql = " UPDATE MaestrasBundle:Areas p ";
+            $dql = " UPDATE MaestrasBundle:Cargo p ";
             $dql.= " SET p.nombre = :nombre, p.estado = :estado, p.descripcion = :descripcion";
             $dql.= " WHERE p.id = :id ";
         $consulta = $em->createQuery($dql);

@@ -3,14 +3,14 @@
 namespace Web\MaestrasBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Web\MaestrasBundle\Util\Util;
 /**
- * Cargo
+ * Ciudad
  *
- * @ORM\Table(name="cargo")
+ * @ORM\Table(name="ciudad")
  * @ORM\Entity
  */
-class Cargo
+class Ciudad
 {
     /**
      * @var integer
@@ -24,9 +24,16 @@ class Cargo
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=100, nullable=false)
+     * @ORM\Column(name="nombre", type="string", length=255, nullable=false)
      */
     private $nombre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="slug", type="string", length=255, nullable=true)
+     */
+    private $slug;
 
     /**
      * @var boolean
@@ -34,13 +41,6 @@ class Cargo
      * @ORM\Column(name="estado", type="boolean", nullable=false)
      */
     private $estado;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="descripcion", type="string", length=100, nullable=true)
-     */
-    private $descripcion;
 
 
 
@@ -59,12 +59,13 @@ class Cargo
      *
      * @param string $nombre
      *
-     * @return Cargo
+     * @return Ciudad
      */
     public function setNombre($nombre)
     {
         $this->nombre = $nombre;
-
+        $this->slug = Util::getSlug($nombre);
+        
         return $this;
     }
 
@@ -79,11 +80,35 @@ class Cargo
     }
 
     /**
+     * Set slug
+     *
+     * @param string $slug
+     *
+     * @return Ciudad
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
      * Set estado
      *
      * @param boolean $estado
      *
-     * @return Cargo
+     * @return Ciudad
      */
     public function setEstado($estado)
     {
@@ -100,29 +125,5 @@ class Cargo
     public function getEstado()
     {
         return $this->estado;
-    }
-
-    /**
-     * Set descripcion
-     *
-     * @param string $descripcion
-     *
-     * @return Cargo
-     */
-    public function setDescripcion($descripcion)
-    {
-        $this->descripcion = $descripcion;
-
-        return $this;
-    }
-
-    /**
-     * Get descripcion
-     *
-     * @return string
-     */
-    public function getDescripcion()
-    {
-        return $this->descripcion;
     }
 }

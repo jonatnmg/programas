@@ -1,0 +1,79 @@
+{% extends 'login_capa.html.twig' %}
+{% block title %}Registrar usuario{% endblock %}
+{% block body %}
+<div>
+    <div class="login_wrapper">    
+    <div id="register">
+      <section class="login_content">
+        <form action="{{ path('usuario_registro') }}" method="post" enctype="multipart/form-data">
+          <h1>Crear cuenta</h1>
+          
+          <div>
+            <input type="text" class="form-control" placeholder="Nombre" required="" name="nombre" id="nombre" />
+          </div>
+          
+          <div>
+            <input type="text" class="form-control" placeholder="Apellidos" required="" name="apellidos" id="apellidos" />
+          </div>
+          
+          <div>              
+            <input type="email" class="form-control" placeholder="Contraseña" required="" id="email" name="email" />
+          </div>
+
+          <div>
+            <input type="password" class="form-control" placeholder="Password" required="" id="password" name="password" />
+          </div>
+          
+          <div>
+            <input type="text" class="form-control" placeholder="Direccion" required="" name="direccion" id="direccion" />
+          </div>
+          
+          <div>
+            <input type="date" class="form-control" required="" name="fecha_nacimiento" id="fecha_nacimiento" />
+          </div>
+          
+          <div>
+            <input type="text" class="form-control" placeholder="DNI" required="" name="dni" id="dni" />
+          </div>
+          
+          <div>
+            <input type="number" class="form-control" placeholder="Número tarjeta" required="" name="numero_tarjeta" id="numero_tarjeta" />
+          </div>
+          
+          <div>
+            <input type="text" class="form-control" placeholder="Ciudad" required="" name="ciudad" id="ciudad" />
+          </div>
+          
+          <div>
+            <input type="checkbox" class="form-control" required="" name="permite_email" id="permite_email" />
+          </div>
+          
+          <div class="separator">
+            <p class="change_link">
+            <h5>Mensaje</h5>
+            </p>
+          </div>
+          
+          <div>
+            <a class="btn btn-default submit" href="{{ path('usuario_registro') }}">Enviar</a>
+          </div>
+
+          <div class="clearfix"></div>
+
+          
+          
+            <div class="clearfix"></div>
+            <br />
+
+            <div>
+              <h1><i class="fa fa-paw"></i> </h1>
+              <p> Desarollado por Jonathan Muñoz Gonzalez ©2018</p>
+              <p> Gentelella Alela! is a Bootstrap 3 template ©2016</p>
+            </div>
+          </div>
+        </form>
+      </section>
+    </div>
+  </div>
+</div>
+  {% endblock %} 

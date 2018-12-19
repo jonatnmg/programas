@@ -1,12 +1,12 @@
 /*
  * SISTEMA DE INFORMACION PARA APOYO DE PROCESOS ADMINISTRATIVOS - SISPROAD
  * VERSION: 1.0
- * FECHA CREACION: 08 OCTUBRE 2018
- * FECHA ULTIMA MODIFICACIÓN: 08 OCTUBRE 2018
- * HORA ULTIMA MODIFICACION: 08:15 P.M.
+ * FECHA CREACION: 16 DICIEMBRE 2018
+ * FECHA ULTIMA MODIFICACIÓN: 16 DICIEMBRE 2018
+ * HORA ULTIMA MODIFICACION: 04:15 P.M.
  * CREADO POR: JONATHAN MUÑOZ GONZALEZ
  * EMAIL: DAVIDSANSONII@HOTMAIL.COM - JONATN@JONATHANMUNOZ.COM.CO
- * SINTÉSIS ARCHIVO: JS, ADMINISTRADOR PARA CREACION, MODIFICACION, ELIMINACION Y LISTADO AREAS
+ * SINTÉSIS ARCHIVO: JS, ADMINISTRADOR PARA CREACION, MODIFICACION, ELIMINACION Y LISTADO CARGOS
  * TODOS LOS DERECHOS SON RESERVADOS (ALGUNOS SURDOS IGUAL)    
 */
 
@@ -25,7 +25,7 @@ $(document).ready(function()
     $("#lista").click(function()
     {
         listar();
-    });    
+    });
     
     //ALGUNAS FUNCIONES MAS PARA EL BOTON CANCELAR
     cancel();
@@ -40,7 +40,7 @@ $(document).ready(function()
             
             $.ajax
             ({  
-                url:        'guardar',  //@routing => Web\MaestrasBundle\Resources\config\routing.yml  - areas_guardar:
+                url:        'guardar_cargo',  //@routing => Web\MaestrasBundle\Resources\config\routing.yml  - areas_guardar:
                 type:       'POST',   
                 data:       datos+'&iud='+iud+"&idEnviado="+idEnviado,  //i = inset, u = update, d = delete ; 1 -> Nuevo, 2 -> Modificar, 3 -> Eliminar
                 async:      true, 
@@ -51,8 +51,8 @@ $(document).ready(function()
                     mostrar_table();
                 },  
                 error : function(xhr, textStatus, errorThrown) {  
-                    alert('Error Ajax!');
-                    mostrar_table();
+                   alert('Error Ajax!');
+                   mostrar_table();
                 }  
             }); 
          return false;
@@ -102,7 +102,7 @@ function eliminar_data()
 
     $.ajax
         ({  
-            url:        'eliminar',  //@routing => Web\TipodeasignacionBundle\Resources\config\routing.yml  - areas_eliminar:
+            url:        'eliminar_cargo',  //@routing => Web\MaestrasBundle\Resources\config\routing.yml  - areas_eliminar:
             type:       'POST',   
             data:       "idEnviado="+idEliminar+'&iud='+2,  //i = inset, u = update, d = delete ; 0 -> Nuevo, 1 -> Modificar, 2 -> Eliminar
             async:      true, 
@@ -166,7 +166,7 @@ var mostrar_table = function ()
          
          "ajax": {
             "method": "POST",
-            "url": "lista",           
+            "url": "lista_cargo",           
         },
          "columns": [
              { "data": "nombre" },
