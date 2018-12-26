@@ -6,7 +6,7 @@ usuario_homepage:
 
 usuario_nuevo:
     path:   /usu_pri
-    defaults: { _controller: UsuarioBundle:Default:index }
+    defaults: { _controller: UsuarioBundle:Default:login }
     
 usuario_login:
     path:   /login
@@ -16,4 +16,5 @@ usuario_login_check:
     path:   /login_check
 
 usuario_logout:
-    path:   /logout
+    path: /logout
+    #defaults: {_controller: UsuarioBundle:Default:logout }

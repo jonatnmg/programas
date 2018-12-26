@@ -12,6 +12,7 @@
         <form action="{{ path('usuario_login_check') }}" method="post">
           <h1>Inicio sesión</h1>
           <div>
+              
             <input type="text" id="username" name="_username" class="form-control" placeholder="NombreUsuario" required="" value="{{ last_username }}" />
           </div>
           <div>
@@ -21,7 +22,7 @@
             <input type="submit" class="btn btn-default submit" name="login" value="Acceder" />
             <a class="reset_pass" href="#">Olvidó su contraseña?</a>
           </div>
-          {% if error %}
+            {% if error is not null %}
             <div clas=""> {{ error.message }}    </div>
           {% endif %}
           <div class="clearfix"></div>

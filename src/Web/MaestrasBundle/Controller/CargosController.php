@@ -9,11 +9,16 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class CargosController extends Controller
-{
-    
+{    
     public function principalAction()
     {
-        return $this->render('@Maestras/Cargo/nuevo.html.twig');
+        $usuario = $this->getUser();
+        $id = $usuario->getId();
+        $nombre_completo = $usuario->getNombre()." ".$usuario->getApellidos();
+        
+        return $this->render('@Maestras/Cargo/nuevo.html.twig', array(
+            "nombre_usuario" => $nombre_completo
+        ));
     }    
     
     public function procesarAction(Request $request)

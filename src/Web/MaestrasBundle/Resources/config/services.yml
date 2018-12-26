@@ -2,3 +2,6 @@ services:
 #    Maestras.example:
 #        class: Web\MaestrasBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
+# Fixtures services
+    MaestrasBundle\DataFixtures\ORM\Ciudades:
+        tags: [doctrine.fixture.orm]

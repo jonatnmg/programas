@@ -7,17 +7,27 @@ security:
             anonymous:  ~
             form_login:
                 login_path: usuario_login
-                check_path: usuario_login_check
+                check_path: usuario_login_check                                
+                default_target_path: usuario_homepage
+                use_referer: true
+            #remember_me:
+            #    key:        sisproad154927
+            #    lifetime:   3600
+            logout:
+                path:   usuario_logout
+                target: usuario_login
 
     access_control:
-        #- { path: ^/usuario/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        #- { path: ^/usuario/registro, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        #- { path: ^/usuario/*, roles: ROLE_USUARIO }
-        #cdcd.. dcd..- { path: ^/master/*, roles: ROLE_USUARIO }
-    
+        - { path: ^/usuario/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/usuario/registro, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/usuario/*, roles: ROLE_USUARIO }
+        - { path: ^/master/*, roles: ROLE_USUARIO }
+        - { path: ^/pqrs/*, roles: ROLE_USUARIO }
+        
     providers:
         usuarios:
             entity: { class: Web\UsuarioBundle\Entity\Usuario, property: email }
             
     encoders:
-        Web\UsuarioBundle\Entity\Usuario: { algorithm: sha512, iterations: 10 }
+        
+        Web\UsuarioBundle\Entity\Usuario: plaintext

@@ -4,9 +4,10 @@ namespace Web\PqrsBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use Web\PqrsBundle\Entity\Pqrs;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\SecurityContext;
+use Web\PqrsBundle\Entity\Pqrs;
 
 class DefaultController extends Controller
 {
@@ -14,9 +15,15 @@ class DefaultController extends Controller
     {
         return $this->render('@Pqrs/Default/index.html.twig');
     }
-    public function principalAction()
+    public function principalAction(Request $request)
     {
-        return $this->render('@Pqrs/Default/nuevo.html.twig');
+        $usuario = $this->getUser();
+        $id = $usuario->getId();
+        $nombre_completo = $usuario->getNombre()." ".$usuario->getApellidos();
+                
+        return $this->render('@Pqrs/Default/nuevo.html.twig', array (
+            "nombre_usuario" => $nombre_completo
+        ));
     }
     public function procesarAction(Request $request)
     {        
@@ -140,5 +147,4 @@ class DefaultController extends Controller
             return "Sin modificar"; 
         }
     }
-    
 }
